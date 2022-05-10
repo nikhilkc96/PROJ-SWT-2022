@@ -17,3 +17,15 @@ gender to meet. Any registered member can query the system by specifying a
 few match criteria. The system will provide the user with a list of potential
 matches.
 
+## Installation
+
+```sh
+$ git clone https://github.com/nikhilkc96/PROJ-SWT-2022/
+$ cd PROJ-SWT-2022//
+$ pip install -r requirements.txt
+```
+## Run 
+```sh
+$ python main.py
+```
+
