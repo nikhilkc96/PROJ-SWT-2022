@@ -1,0 +1,24 @@
+{
+   "data": [
+      {
+         "Name": "Nikhil",
+         "Age": "26",
+         "Gender": "Male",
+         "Interstes": "Coding",
+         "Per_Gender": "Female",
+         "Email": "nikhilkc96@gmail.com",
+         "PassWord": "827ccb0eea8a706c4c34a16891f84e7b",
+         "id": 677329340363650762
+      },
+      {
+         "Name": "test",
+         "Age": "test",
+         "Gender": "test",
+         "Interstes": "test",
+         "Per_Gender": "test",
+         "Email": "test",
+         "PassWord": "098f6bcd4621d373cade4e832627b4f6",
+         "id": 332782070654645104
+      }
+   ]
+}
