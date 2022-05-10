@@ -3,6 +3,8 @@ import hashlib
 import pyfiglet
 import json
 from pysondb import db
+import getpass
+import pyautogui
 
 database=db.getDb("database.json")
 
@@ -14,8 +16,8 @@ def signup():
     interests = input("Enter your intersts: ")
     pre_gen = input("Enter the preferred gender to meet: ")
     email = input("Enter email address: ")
-    pwd = input("Enter password: ")
-    conf_pwd = input("Confirm password: ")
+    pwd = pyautogui.password(text='Enter Password', title='Password', default='', mask='*')
+    conf_pwd = pyautogui.password(text='Confirm password:', title='Password', default='', mask='*')
     if conf_pwd == pwd:
         enc = conf_pwd.encode()
         hash1 = hashlib.md5(enc).hexdigest()
@@ -35,15 +37,22 @@ def signup():
 def login():
     database=db.getDb("database.json")
     email = input("Enter email: ")
-    pwd = input("Enter password: ")
+    pwd = pyautogui.password(text='Enter Password', title='Password', default='', mask='*')
     auth = pwd.encode()
     auth_hash = hashlib.md5(auth).hexdigest()
     demo = database.getAll()
     output_dict = [x for x in demo if x['Email'] == email and x['PassWord'] == auth_hash]
     if any(output_dict):
-         print("Logged in Successfully!")
+         match(output_dict)
     else:
          print("Login failed! \n")
+
+
+
+def match(x):
+    print("Logged in Successfully!")
+    print(x)
+
 while 1:
     
     print(ascii_banner)
