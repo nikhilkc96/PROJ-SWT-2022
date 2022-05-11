@@ -29,3 +29,9 @@ $ pip install -r requirements.txt
 $ python main.py
 ```
 
+Build your app with the following command:
+```sh
+pyinstaller -F --add-data=database.json:. main.py
+```
+
+
