@@ -6,7 +6,7 @@ import getpass
 from os import path
 import pandas as pd
 from fuzzywuzzy import fuzz
-# from fuzzywuzzy import process
+from goto import with_goto
 
 
 path_to_dat = path.abspath(path.join(path.dirname(__file__), 'database.json'))
@@ -18,7 +18,17 @@ database=db.getDb(path_to_dat)
 def signup():
     name = input("Please enter your name?: ")
     age = input("Enter your age: ")
-    gender = input("Enter your gender: ")
+    while not age.isdigit():
+            print("That's not a correct number. Try again.")
+            age = input("Enter your choice: ")
+    gender= input("What is your gender? \nEnter 'M' for Male or 'F' for Female\n").upper()
+    if gender == "M":
+        gender = "Male"
+    elif gender == "F":
+        gender= "Female"
+    else:
+        print("Wrong Choice!")    
+        signup()
     interests = input("Enter your intersts: ")
     pre_gen = input("Enter the preferred gender to meet: ")
     email = input("Enter email address: ")
@@ -40,6 +50,7 @@ def signup():
         print("You have registered successfully!")
     else:
         print("Password is not same as above! \n")
+
 def login():
     database=db.getDb(path_to_dat)
     email = input("Enter email: ")
@@ -51,27 +62,47 @@ def login():
     if any(output_dict):
          match(output_dict)
     else:
-         print("Login failed! \n")
+         print("Login failed! (Enter the correct email and password)\n")
 
 
 
 def match(x):
-    
     print("Logged in Successfully!")
     print("\nYour Profile Details:\n")
     df = pd.DataFrame(x)
     print(df[['id','Name','Age','Gender','Per_Gender','Interstes','Email']]) 
-
-    print("\nYour Match: \n") 
-    perf =  df['Per_Gender'].values[0]
-    intu =  df['Interstes'].values[0]
-    gender_match = database.reSearch("Gender", perf)
-    gender_match_dic = pd.DataFrame(gender_match)
-    print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1}".format('Name','Age','Gender','Per_Gender','Email','Interstes'))
-    for Name, Age, Gender, Per_Gender, Email, Interstes in zip(df['Name'], df['Age'],df['Gender'],df['Per_Gender'],df['Email'],df['Interstes']):
-        print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1} {:<1}".format(Name, Age, Gender, Per_Gender, Email, fuzz.ratio(Interstes,intu),"%"))
     
-    # print(gender_match_dic[['Name','Age','Gender','Per_Gender','Email']])
+    
+
+    while 1:
+        print("\n1.Find Your Match")
+        print("2.View all Profiles")
+        print("3.Exit")
+        print("*****************************")
+        answer = input("Enter your choice: ")
+        while not answer.isdigit():
+            print("That's not a correct number choice. Try again.")
+            answer = input("Enter your choice: ")
+        ch = int(answer)
+        if ch == 1:
+            print("\nYour Match: \n") 
+            df = pd.DataFrame(x)
+            perf =  df['Per_Gender'].values[0]
+            intu =  df['Interstes'].values[0]
+            gender_match = database.reSearch("Gender", perf)
+            # print(gender_match)
+            gender_match_dic = pd.DataFrame(gender_match)
+            print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1}".format('Name','Age','Gender','Per_Gender','Email','Interstes'))
+            for Name, Age, Gender, Per_Gender, Email, Interstes in zip(gender_match_dic['Name'], gender_match_dic['Age'],gender_match_dic['Gender'],gender_match_dic['Per_Gender'],gender_match_dic['Email'],gender_match_dic['Interstes']):
+                print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1} {:<1}".format(Name, Age, Gender, Per_Gender, Email, fuzz.ratio(Interstes,intu),"%"))
+        elif ch == 2:
+            a = database.getAll()
+            df = pd.DataFrame(a)
+            print(df)
+        elif ch == 3:
+            break
+        else:
+            print("Wrong Choice!")
     
 
 while 1:
@@ -94,8 +125,11 @@ while 1:
     print("2.Login")
     print("3.Exit")
     print("*****************************")
-
-    ch = int(input("Enter your choice: "))
+    answer = input("Enter your choice: ")
+    while not answer.isdigit():
+        print("That's not a number. Try again.")
+        answer = input("Enter your choice: ")
+    ch = int(answer)
     if ch == 1:
         signup()
     elif ch == 2:
