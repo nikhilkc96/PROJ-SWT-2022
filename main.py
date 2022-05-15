@@ -92,9 +92,9 @@ def match(x):
             gender_match = database.reSearch("Gender", perf)
             # print(gender_match)
             gender_match_dic = pd.DataFrame(gender_match)
-            print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1}".format('Name','Age','Gender','Per_Gender','Email','Interstes'))
+            print ("{:<20} {:<10} {:<10} {:<10} {:<22} {:<30} {:<1}".format('Name','Age','Gender','Per_Gender','Email','Intersts','Match %'))
             for Name, Age, Gender, Per_Gender, Email, Interstes in zip(gender_match_dic['Name'], gender_match_dic['Age'],gender_match_dic['Gender'],gender_match_dic['Per_Gender'],gender_match_dic['Email'],gender_match_dic['Interstes']):
-                print ("{:<10} {:<10} {:<10} {:<10} {:<20} {:<1} {:<1}".format(Name, Age, Gender, Per_Gender, Email, fuzz.ratio(Interstes,intu),"%"))
+                print ("{:<20} {:<10} {:<10} {:<10} {:<22} {:<30} {:<1}".format(Name, Age, Gender, Per_Gender, Email,Interstes,fuzz.ratio(Interstes,intu),"%"))
         elif ch == 2:
             a = database.getAll()
             df = pd.DataFrame(a)
