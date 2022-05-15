@@ -98,7 +98,7 @@ def match(x):
         elif ch == 2:
             a = database.getAll()
             df = pd.DataFrame(a)
-            print(df)
+            print(df[['id','Name','Age','Gender','Per_Gender','Interstes','Email']])
         elif ch == 3:
             break
         else:
