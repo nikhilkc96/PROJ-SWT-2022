@@ -6,7 +6,7 @@ import getpass
 from os import path
 import pandas as pd
 from fuzzywuzzy import fuzz
-from goto import with_goto
+#from goto import with_goto
 
 
 path_to_dat = path.abspath(path.join(path.dirname(__file__), 'database.json'))
